@@ -1,11 +1,11 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "Contacts API",
-    "description": "An API for storing, retrieving, updating, and deleting contact information.",
+    "title": "User API",
+    "description": "An API for storing, retrieving, updating, and deleting user information.",
     "version": "1.0.0"
   },
-  "host": "cse341week1.onrender.com",
+  "host": "week3-q9vz.onrender.com",
   "basePath": "/",
   "schemes": [
     "https"
