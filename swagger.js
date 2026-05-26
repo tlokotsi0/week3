@@ -7,7 +7,7 @@ const doc = {
   },
   
 
-  host: 'cse341week1.onrender.com',
+  host: 'week3-q9vz.onrender.com',
   schemes: ['https']
 };
 
