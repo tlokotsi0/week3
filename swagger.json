@@ -1,4 +1,16 @@
-"paths": {
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "User API",
+    "description": "An API for storing, retrieving, updating, and deleting user information.",
+    "version": "1.0.0"
+  },
+  "host": "week3-q9vz.onrender.com",
+  "basePath": "/",
+  "schemes": [
+    "https"
+  ],
+  "paths": {
     "/": {
       "get": {
         "description": "Get all users",
@@ -59,9 +71,7 @@
                 "lastName": { "type": "string" },
                 "email": { "type": "string" },
                 "favoriteColor": { "type": "string" },
-                "birthday": { "type": "string" },
-                "maritalStatus": { "type": "string" },
-                "numberOfChildren": { "type": "integer" }
+                "birthday": { "type": "string" }
               }
             }
           }
@@ -83,3 +93,4 @@
       }
     }
   }
+}
