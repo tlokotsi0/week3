@@ -71,7 +71,9 @@
                 "lastName": { "type": "string" },
                 "email": { "type": "string" },
                 "favoriteColor": { "type": "string" },
-                "birthday": { "type": "string" }
+                "birthday": { "type": "string" },
+                "maritalStatus": { "type": "string" },
+                "numberOfChildren": { "type": "integer" }
               }
             }
           }
