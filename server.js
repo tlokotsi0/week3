@@ -1,6 +1,7 @@
 const cors = require('cors');
 const express = require ('express');
 const app = express();
+const errorHandler = require('./middleware/errorHandler');
 const bodyParser = require('body-parser')
 const mongodb = require('./db/connect');
 const port = 3000;
@@ -10,6 +11,9 @@ app.use(express.json());
 
 app.use(bodyParser.json());
 app.use('/', require('./routes/index'));
+
+app.use(errorHandler);
+
 
 // Connect to DB then start the server
 mongodb.initDb((err) => {
