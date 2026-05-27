@@ -1,8 +1,12 @@
+const cors = require('cors');
 const express = require ('express');
 const app = express();
 const bodyParser = require('body-parser')
 const mongodb = require('./db/connect');
 const port = 3000;
+
+app.use(cors());
+app.use(express.json());
 
 app.use(bodyParser.json());
 app.use('/', require('./routes/index'));
