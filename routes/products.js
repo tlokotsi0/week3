@@ -1,6 +1,6 @@
 const routes = require('express').Router();
 const productsController = require('../controllers/products');
-const { productValidationRules, validate } = require('../middleware/validateUsers');
+const { productValidationRules, validate } = require('../middleware/validateProducts');
 
 routes.get('/', productsController.getAll);
 routes.get('/:id', productsController.getOne);
