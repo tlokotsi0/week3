@@ -3,6 +3,7 @@ const usersController = require('../controllers/users');
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('../swagger.json');  
 const { userValidationRules, validate } = require('../middleware/validateUsers');
+const { productValidationRules, validate } = require('../middleware/validateProducts');
 
 // Swagger UI Route
 routes.use('/api-docs', swaggerUi.serve);
