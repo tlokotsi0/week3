@@ -1,97 +1,73 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "User API",
-    "description": "An API for storing, retrieving, updating, and deleting user information.",
+    "title": "Dual Collection API",
+    "description": "API for managing Users and Products.",
     "version": "1.0.0"
   },
   "host": "week3-q9vz.onrender.com",
   "basePath": "/",
-  "schemes": [
-    "https"
-  ],
+  "schemes": ["https"],
   "paths": {
-    "/": {
-      "get": {
-        "description": "Get all users",
-        "produces": ["application/json"],
-        "responses": {
-          "200": { "description": "OK" }
-        }
+
+    "/users": {
+      "get": { 
+        "description": "Get all users", 
+        "responses": { "200": { "description": "OK" } }
+       },
+
+      "post": { 
+        "description": "Create a new user", 
+        "responses": { "201": { "description": "Created" } } }
+    },
+    "/users/{id}": {
+      "get": { 
+        "description": "Get user by ID", 
+        "parameters": [{ "name": "id", "in": "path", "required": true, "type": "string" }], 
+        "responses": { "200": { "description": "OK" } } 
       },
-      "post": {
-        "description": "Create a new user",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "firstName": { "type": "string" },
-                "lastName": { "type": "string" },
-                "email": { "type": "string" },
-                "favoriteColor": { "type": "string" },
-                "birthday": { "type": "string" },
-                "maritalStatus": { "type": "string" },
-                "numberOfChildren": { "type": "integer" }
-              }
-            }
-          }
-        ],
-        "responses": {
-          "201": { "description": "Created" },
-          "500": { "description": "Internal Server Error" }
-        }
+
+      "put": { 
+        "description": "Update user", 
+        "parameters": [{ "name": "id", "in": "path", "required": true, "type": "string" }], 
+        "responses": { "204": { "description": "No Content" } } 
+      },
+
+      "delete": { 
+        "description": "Delete user", 
+        "parameters": [{ "name": "id", "in": "path", "required": true, "type": "string" }], 
+        "responses": { "204": { "description": "No Content" } } 
       }
     },
-    "/{id}": {
-      "get": {
-        "description": "Get a single user by ID",
-        "produces": ["application/json"],
-        "parameters": [
-          { "name": "id", "in": "path", "required": true, "type": "string" }
-        ],
-        "responses": {
-          "200": { "description": "OK" },
-          "400": { "description": "Invalid ID" }
-        }
+
+    "/products": {
+      "get": { 
+        "description": "Get all products", 
+        "responses": { "200": { "description": "OK" } } 
       },
-      "put": {
-        "description": "Update an existing user",
-        "parameters": [
-          { "name": "id", "in": "path", "required": true, "type": "string" },
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "firstName": { "type": "string" },
-                "lastName": { "type": "string" },
-                "email": { "type": "string" },
-                "favoriteColor": { "type": "string" },
-                "birthday": { "type": "string" },
-                "maritalStatus": { "type": "string" },
-                "numberOfChildren": { "type": "integer" }
-              }
-            }
-          }
-        ],
-        "responses": {
-          "204": { "description": "No Content" },
-          "500": { "description": "Internal Server Error" }
-        }
+      "post": { 
+        "description": "Create a new product", 
+        "responses": { "201": { "description": "Created" } } 
+      }
+    },
+
+    "/products/{id}": {
+      "get": { 
+        "description": "Get product by ID", 
+        "parameters": [{ "name": "id", "in": "path", "required": true, "type": "string" }], 
+        "responses": { "200": { "description": "OK" } } 
       },
-      "delete": {
-        "description": "Delete a user by ID",
-        "parameters": [
-          { "name": "id", "in": "path", "required": true, "type": "string" }
-        ],
-        "responses": {
-          "204": { "description": "No Content" },
-          "500": { "description": "Internal Server Error" }
-        }
+
+      "put": { 
+        "description": "Update product", 
+        "parameters": [{ "name": "id", "in": "path", "required": true, "type": "string" }], 
+        "responses": { "204": { "description": "No Content" } } 
+      },
+
+      "delete": { 
+        "description": "Delete product", 
+        "parameters": [{ "name": "id", "in": "path", "required": true, "type": "string" }], 
+        "responses": { "204": { "description": "No Content" } } 
       }
     }
   }
