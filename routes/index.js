@@ -9,7 +9,12 @@ const { productValidationRules } = require('../middleware/validateProducts');
 routes.use('/api-docs', swaggerUi.serve);
 routes.get('/api-docs', swaggerUi.setup(swaggerDocument));
 
+routes.get('/', (req, res) => {
+  res.send('Welcome to the API! Please visit /users or /products');
+});
+
 //routes
 routes.use('/users', require('./users'));
 routes.use('/products', require('./products'));
+
 module.exports = routes;
