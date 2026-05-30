@@ -48,11 +48,32 @@
         "responses": { "200": { "description": "OK" } } 
       },
 
-      "put": { 
-        "description": "Update user", 
-        "parameters": [{ "name": "id", "in": "path", "required": true, "type": "string" }], 
-        "responses": { "204": { "description": "No Content" } } 
-      },
+     "put": {
+        "description": "Update an existing user",
+        "parameters": [
+              { "name": "id", "in": "path", "required": true, "type": "string" },
+              {
+                  "name": "body",
+                  "in": "body",
+                  "schema": {
+                    "type": "object",
+                  "properties": {
+                      "firstName": { "type": "string" },
+                      "lastName": { "type": "string" },
+                      "email": { "type": "string" },
+                      "favoriteColor": { "type": "string" },
+                      "birthday": { "type": "string" },
+                      "maritalStatus": { "type": "string" },
+                      "numberOfChildren": { "type": "integer" }
+                      }
+                    }
+                  }
+                ],
+          "responses": {
+            "204": { "description": "No Content" },
+            "500": { "description": "Internal Server Error" }
+            }
+        },
 
       "delete": { 
         "description": "Delete user", 
@@ -96,10 +117,27 @@
         "responses": { "200": { "description": "OK" } } 
       },
 
-      "put": { 
-        "description": "Update product", 
-        "parameters": [{ "name": "id", "in": "path", "required": true, "type": "string" }], 
-        "responses": { "204": { "description": "No Content" } } 
+      "put": {
+          "description": "Update an existing product",
+          "parameters": [
+              { "name": "id", "in": "path", "required": true, "type": "string" },
+              {
+                "name": "body",
+                "in": "body",
+                "schema": {
+                "type": "object",
+                "properties": {
+                "name": { "type": "string" },
+                "quantity": { "type": "integer" },
+                "price": { "type": "number" }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "204": { "description": "No Content" },
+          "500": { "description": "Internal Server Error" }
+        }
       },
 
       "delete": { 
