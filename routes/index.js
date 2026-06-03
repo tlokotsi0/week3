@@ -9,9 +9,9 @@ const { productValidationRules } = require('../middleware/validateProducts');
 routes.use('/api-docs', swaggerUi.serve);
 routes.get('/api-docs', swaggerUi.setup(swaggerDocument));
 
-router.get('/login', passport.authenticate('github'), (req, res) => {});
+routes.get('/login', passport.authenticate('github'), (req, res) => {});
 
-router.get('/logout', function(req, res, next) {
+routes.get('/logout', function(req, res, next) {
     req.logout(function(err) {
         if (err) { return next(err); }
         res.redirect('/');
