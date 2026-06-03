@@ -19,11 +19,11 @@ app.use(cors({
 app.enable('trust proxy');
 app.use(session({
   secret: "secret",
-  resave: false,
+  resave: true,
   saveUninitialized: true,
   cookie: {
     secure: true,      
-    sameSite: 'none',  
+    sameSite: 'lax',  
     }
 }));
 
