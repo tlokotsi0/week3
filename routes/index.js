@@ -1,4 +1,5 @@
 const routes = require('express').Router();
+const passport = require('passport');
 const usersController = require('../controllers/users');
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('../swagger.json');
