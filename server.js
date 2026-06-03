@@ -16,11 +16,17 @@ app.use(cors({
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS']
 }));
 
+app.enable('trust proxy');
 app.use(session({
   secret: "secret",
   resave: false,
   saveUninitialized: true,
+  cookie: {
+    secure: true,      
+    sameSite: 'none',  
+    }
 }));
+
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -46,12 +52,20 @@ app.get('/', (req, res) => {
   res.send(req.isAuthenticated() ? `Logged in as ${req.user.displayName}` : "LOGGED OUT");
 });
 
-app.get('/github/callback', passport.authenticate('github', {
-failureRedirect: '/api-docs',
-}), (req, res) => {
-req.session.user = req.user;
-res.redirect('/');
-});
+app.get('/github/callback', 
+  passport.authenticate('github', { 
+    failureRedirect: '/api-docs',
+  }), 
+  (req, res) => {
+    req.session.user = req.user; 
+    req.session.save((err) => {
+      if (err) {
+        console.error("Session save error:", err);
+      }
+      res.redirect('/');
+    });
+  }
+);
 
 
 app.use(bodyParser.json());
