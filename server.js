@@ -9,21 +9,20 @@ const passport = require('passport');
 const GitHubStrategy = require ('passport-github2').Strategy;
 const port = 3000;
 
-app.use(cors());
 app.use(express.json());
 
-app.use(bodyParser.json());
-app.use('/', require('./routes/index'));
-app.use(errorHandler);
+app.use(cors({
+  origin: '*', 
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS']
+}));
+
 app.use(session({
   secret: "secret",
   resave: false,
-  saveUninitialied: true,
+  saveUninitialized: true,
 }));
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(cors({ methods:["POST, GET, PUT, PATCH, OPTIONS, DELETE"]}));
-app.use(cors({ origin: "*"}));
 
 passport.use(new GitHubStrategy({
   clientID: process.env.GITHUB_CLIENT_ID,
@@ -44,21 +43,20 @@ passport.deserializeUser((user, done) => {
 });
 
 app.get('/', (req, res) => {
-  const message = req.session.user !== undefined 
-    ? `Logged in as ${req.session.user.displayName}` 
-    : "LOGGED OUT";
-    
-  res.send(message);
+  res.send(req.isAuthenticated() ? `Logged in as ${req.user.displayName}` : "LOGGED OUT");
 });
 
 app.get('/github/callback', passport.authenticate('github', {
 failureRedirect: '/api-docs',
-session: false
 }), (req, res) => {
 req.session.user = req.user;
 res.redirect('/');
 });
 
+
+app.use(bodyParser.json());
+app.use('/', require('./routes/index'));
+app.use(errorHandler);
 
 
 // Connect to DB then start the server
