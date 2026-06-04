@@ -18,11 +18,32 @@ app.use(cors({
 }));
 
 app.set('trust proxy', 1);
+
+
+passport.use(new GitHubStrategy({
+  clientID: process.env.GITHUB_CLIENT_ID,
+  clientSecret: process.env.GITHUB_CLIENT_SECRET,
+  callbackURL: process.env.CALLBACK_URL
+},
+function(accessToken, refreshToken, profile, done) {
+  return done(null, profile);
+}
+));
+
+passport.serializeUser((user, done) => {
+  done(null, user); 
+});
+
+passport.deserializeUser((user, done) => {
+  done(null, user); 
+});
+
+
 app.use(session({
   name: 'my-app-session', 
   secret: process.env.SESSION_SECRET,
-  resave: false,          
-  saveUninitialized: false, 
+  resave: false,             
+  saveUninitialized: false,  
   proxy: true,
   store: MongoStore.create({ 
     mongoUrl: process.env.MONGODB_URI,
@@ -35,29 +56,8 @@ app.use(session({
     httpOnly: true
   }
 }));
-app.use(passport.initialize());
-app.use(passport.session());
 
-passport.use(new GitHubStrategy({
-  clientID: process.env.GITHUB_CLIENT_ID,
-  clientSecret: process.env.GITHUB_CLIENT_SECRET,
-  callbackURL: process.env.CALLBACK_URL
-},
-function(accessToken, refreshToken, profile, done){
-  return done(null, profile)
-}
-));
-
-passport.serializeUser((user, done) => {
-  console.log("Serializing user:", user.id);
-  done(null, user);
-});
-
-passport.deserializeUser((user, done) => {
-  done(null, user);
-});
-
-app.get('/', (req, res) => {
+/*app.get('/', (req, res) => {
   if (req.isAuthenticated() && req.user) {
     const name = req.user.displayName || req.user.username || "GitHub User";
     return res.send(`Logged in as ${name}`);
@@ -87,7 +87,7 @@ app.get('/debug', (req, res) => {
   });
 });
 //test
-
+*/
 app.use(bodyParser.json());
 app.use('/', require('./routes/index'));
 app.use(errorHandler);
