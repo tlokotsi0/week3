@@ -16,15 +16,16 @@ app.use(cors({
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS']
 }));
 
-app.enable('trust proxy');
+app.set('trust proxy', 1);
 app.use(session({
-  secret: "secret",
-  resave: true,
-  saveUninitialized: true,
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: false,
   cookie: {
-    secure: true,      
-    sameSite: 'lax',  
-    }
+    secure: true,
+    sameSite: 'lax',
+    maxAge: 24 * 60 * 60 * 1000
+  }
 }));
 
 app.use(passport.initialize());
@@ -67,6 +68,15 @@ app.get('/github/callback',
   }
 );
 
+//test code
+app.get('/debug', (req, res) => {
+  res.json({
+    authenticated: req.isAuthenticated(),
+    user: req.user,
+    sessionID: req.sessionID
+  });
+});
+//test
 
 app.use(bodyParser.json());
 app.use('/', require('./routes/index'));
