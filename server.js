@@ -16,6 +16,7 @@ app.use(cors({
 }));
 
 app.use(express.json());
+app.use(bodyParser.json());
 
 app.set('trust proxy', 1);
 
@@ -28,18 +29,6 @@ function(accessToken, refreshToken, profile, done) {
   return done(null, profile);
 }
 ));
-
-app.use(passport.initialize());
-app.use(passport.session());
-
-passport.serializeUser((user, done) => {
-  done(null, user); 
-});
-
-passport.deserializeUser((user, done) => {
-  done(null, user); 
-});
-
 
 app.use(session({
   name: 'my-app-session', 
@@ -58,6 +47,19 @@ app.use(session({
     httpOnly: true
   }
 }));
+
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.serializeUser((user, done) => {
+  done(null, user); 
+});
+
+passport.deserializeUser((user, done) => {
+  done(null, user); 
+});
+
 
 app.get('/', (req, res) => {
   if (req.isAuthenticated() && req.user) {
@@ -90,7 +92,6 @@ app.get('/debug', (req, res) => {
 });
 //test
 
-app.use(bodyParser.json());
 app.use('/', require('./routes/index'));
 app.use(errorHandler);
 
