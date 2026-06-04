@@ -10,30 +10,7 @@ const { productValidationRules } = require('../middleware/validateProducts');
 routes.use('/api-docs', swaggerUi.serve);
 routes.get('/api-docs', swaggerUi.setup(swaggerDocument));
 
-// Login Route
-routes.get('/login', passport.authenticate('github', { scope: [ 'user:email' ] }));
-
-// Move Callback here to keep it in the same middleware chain
-routes.get('/github/callback', 
-  passport.authenticate('github', { failureRedirect: '/api-docs' }), 
-  (req, res) => {
-    req.session.save((err) => {
-      if (err) return next(err);
-      res.redirect('/');
-    });
-  }
-);
-
-routes.get('/logout', function(req, res, next) {
-  req.logout(function(err) {
-    if (err) { return next(err); }
-    res.redirect('/');
-  });
-});
-
-
-
-/*routes.get('/login', passport.authenticate('github'), (req, res) => {});
+routes.get('/login', passport.authenticate('github', { scope: ['user:email'] }));
 
 routes.get('/logout', function(req, res, next) {
     req.logout(function(err) {
@@ -41,7 +18,7 @@ routes.get('/logout', function(req, res, next) {
         res.redirect('/');
     });
 });
-*/
+
 
 //routes
 routes.use('/users', require('./users'));

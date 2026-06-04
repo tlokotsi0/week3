@@ -2,7 +2,7 @@ const cors = require('cors');
 const express = require ('express');
 const app = express();
 const session = require ('express-session');
-const MongoStore = require('connect-mongo').default;
+const MongoStore = require('connect-mongo');
 const errorHandler = require('./middleware/errorHandler');
 const bodyParser = require('body-parser');
 const mongodb = require('./db/connect');
@@ -10,12 +10,15 @@ const passport = require('passport');
 const GitHubStrategy = require ('passport-github2').Strategy;
 const port = 3000;
 
-app.use(express.json());
-
 app.use(cors({
   origin: '*', 
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS']
 }));
+
+app.use(express.json());
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.set('trust proxy', 1);
 
@@ -45,10 +48,10 @@ app.use(session({
   resave: false,             
   saveUninitialized: false,  
   proxy: true,
-  store: MongoStore.create({ 
+  store: MongoStore.create({
     mongoUrl: process.env.MONGODB_URI,
-    collectionName: 'sessions' 
-  }),
+    collectionName: 'sessions'
+}),
   cookie: {
     secure: true, 
     sameSite: 'none', 
@@ -57,7 +60,7 @@ app.use(session({
   }
 }));
 
-/*app.get('/', (req, res) => {
+app.get('/', (req, res) => {
   if (req.isAuthenticated() && req.user) {
     const name = req.user.displayName || req.user.username || "GitHub User";
     return res.send(`Logged in as ${name}`);
@@ -87,7 +90,7 @@ app.get('/debug', (req, res) => {
   });
 });
 //test
-*/
+
 app.use(bodyParser.json());
 app.use('/', require('./routes/index'));
 app.use(errorHandler);
