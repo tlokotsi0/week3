@@ -17,9 +17,6 @@ app.use(cors({
 
 app.use(express.json());
 
-app.use(passport.initialize());
-app.use(passport.session());
-
 app.set('trust proxy', 1);
 
 passport.use(new GitHubStrategy({
@@ -31,6 +28,9 @@ function(accessToken, refreshToken, profile, done) {
   return done(null, profile);
 }
 ));
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 passport.serializeUser((user, done) => {
   done(null, user); 
