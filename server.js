@@ -7,6 +7,7 @@ const bodyParser = require('body-parser');
 const mongodb = require('./db/connect');
 const passport = require('passport');
 const GitHubStrategy = require ('passport-github2').Strategy;
+const MongoStore = require('connect-mongo');
 const port = 3000;
 
 app.use(express.json());
@@ -21,6 +22,9 @@ app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
+  store: MongoStore.create({
+    mongoUrl: process.env.MONGODB_URI
+  }),
   cookie: {
     secure: true,
     sameSite: 'lax',
