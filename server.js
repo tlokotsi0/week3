@@ -2,12 +2,12 @@ const cors = require('cors');
 const express = require ('express');
 const app = express();
 const session = require ('express-session');
+const MongoStore = require('connect-mongo').default;
 const errorHandler = require('./middleware/errorHandler');
 const bodyParser = require('body-parser');
 const mongodb = require('./db/connect');
 const passport = require('passport');
 const GitHubStrategy = require ('passport-github2').Strategy;
-const MongoStore = require('connect-mongo');
 const port = 3000;
 
 app.use(express.json());
