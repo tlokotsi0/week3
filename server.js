@@ -19,19 +19,22 @@ app.use(cors({
 
 app.set('trust proxy', 1);
 app.use(session({
+  name: 'my-app-session', 
   secret: process.env.SESSION_SECRET,
-  resave: false,
+  resave: true,          
   saveUninitialized: true, 
-  proxy: true, 
-  store: MongoStore.create({ mongoUrl: process.env.MONGODB_URI }),
+  proxy: true,
+  store: MongoStore.create({ 
+    mongoUrl: process.env.MONGODB_URI,
+    collectionName: 'sessions' 
+  }),
   cookie: {
     secure: true, 
     sameSite: 'none', 
     maxAge: 24 * 60 * 60 * 1000,
-    httpOnly: true 
+    httpOnly: true
   }
 }));
-
 app.use(passport.initialize());
 app.use(passport.session());
 
