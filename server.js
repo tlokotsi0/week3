@@ -21,14 +21,14 @@ app.set('trust proxy', 1);
 app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
-  saveUninitialized: false,
-  store: MongoStore.create({
-    mongoUrl: process.env.MONGODB_URI
-  }),
+  saveUninitialized: true, 
+  proxy: true, 
+  store: MongoStore.create({ mongoUrl: process.env.MONGODB_URI }),
   cookie: {
-    secure: true,
-    sameSite: 'lax',
-    maxAge: 24 * 60 * 60 * 1000
+    secure: true, 
+    sameSite: 'none', 
+    maxAge: 24 * 60 * 60 * 1000,
+    httpOnly: true 
   }
 }));
 
