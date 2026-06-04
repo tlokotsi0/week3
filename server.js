@@ -20,16 +20,6 @@ app.use(bodyParser.json());
 
 app.set('trust proxy', 1);
 
-passport.use(new GitHubStrategy({
-  clientID: process.env.GITHUB_CLIENT_ID,
-  clientSecret: process.env.GITHUB_CLIENT_SECRET,
-  callbackURL: process.env.CALLBACK_URL
-},
-function(accessToken, refreshToken, profile, done) {
-  return done(null, profile);
-}
-));
-
 app.use(session({
   name: 'my-app-session', 
   secret: process.env.SESSION_SECRET,
@@ -42,7 +32,7 @@ app.use(session({
 }),
   cookie: {
     secure: true, 
-    sameSite: 'none', 
+    sameSite: 'lax', 
     maxAge: 24 * 60 * 60 * 1000,
     httpOnly: true
   }
@@ -51,6 +41,16 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
+
+passport.use(new GitHubStrategy({
+  clientID: process.env.GITHUB_CLIENT_ID,
+  clientSecret: process.env.GITHUB_CLIENT_SECRET,
+  callbackURL: process.env.CALLBACK_URL
+},
+function(accessToken, refreshToken, profile, done) {
+  return done(null, profile);
+}
+));
 
 passport.serializeUser((user, done) => {
   done(null, user); 
