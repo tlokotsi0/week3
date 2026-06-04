@@ -2,7 +2,7 @@ const cors = require('cors');
 const express = require ('express');
 const app = express();
 const session = require ('express-session');
-const MongoStore = require('connect-mongo');
+const { MongoStore } = require('connect-mongo');
 const errorHandler = require('./middleware/errorHandler');
 const bodyParser = require('body-parser');
 const mongodb = require('./db/connect');
@@ -22,10 +22,7 @@ app.use(passport.session());
 
 app.set('trust proxy', 1);
 
-console.log(MongoStore);
-console.log('create =', MongoStore.create);
-
-/*passport.use(new GitHubStrategy({
+passport.use(new GitHubStrategy({
   clientID: process.env.GITHUB_CLIENT_ID,
   clientSecret: process.env.GITHUB_CLIENT_SECRET,
   callbackURL: process.env.CALLBACK_URL
@@ -92,7 +89,7 @@ app.get('/debug', (req, res) => {
   });
 });
 //test
-*/
+
 app.use(bodyParser.json());
 app.use('/', require('./routes/index'));
 app.use(errorHandler);
