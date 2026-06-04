@@ -49,7 +49,7 @@ function(accessToken, refreshToken, profile, done){
 ));
 
 passport.serializeUser((user, done) => {
-  done(null, user)
+  done(null, user.id)
 });
 
 passport.deserializeUser((user, done) => {
@@ -61,14 +61,12 @@ app.get('/', (req, res) => {
 });
 
 app.get('/github/callback', 
-  passport.authenticate('github', { 
-    failureRedirect: '/api-docs',
-  }), 
+  passport.authenticate('github', { failureRedirect: '/api-docs' }), 
   (req, res) => {
-    req.session.user = req.user; 
     req.session.save((err) => {
       if (err) {
-        console.error("Session save error:", err);
+        console.error("Session Save Error:", err);
+        return res.redirect('/api-docs');
       }
       res.redirect('/');
     });
