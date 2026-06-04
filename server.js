@@ -21,8 +21,8 @@ app.set('trust proxy', 1);
 app.use(session({
   name: 'my-app-session', 
   secret: process.env.SESSION_SECRET,
-  resave: true,          
-  saveUninitialized: true, 
+  resave: false,          
+  saveUninitialized: false, 
   proxy: true,
   store: MongoStore.create({ 
     mongoUrl: process.env.MONGODB_URI,
@@ -49,11 +49,12 @@ function(accessToken, refreshToken, profile, done){
 ));
 
 passport.serializeUser((user, done) => {
-  done(null, user)
+  console.log("Serializing user:", user.id);
+  done(null, user);
 });
 
 passport.deserializeUser((user, done) => {
-  done(null, user)
+  done(null, user);
 });
 
 app.get('/', (req, res) => {
