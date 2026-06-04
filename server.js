@@ -82,7 +82,7 @@ app.get('/debug', (req, res) => {
   res.json({
     authenticated: req.isAuthenticated(),
     user: req.user,
-    sessionID: req.sessionID
+    session: req.session
   });
 });
 //test
